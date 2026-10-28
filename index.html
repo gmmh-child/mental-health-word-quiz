@@ -48,7 +48,7 @@ body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;z-
 <label class="field">성별<select name="gender" required><option value="">선택해 주세요.</option><option>남성</option><option>여성</option></select></label>
 </div>
 <label class="consent"><input type="checkbox" name="privacyConsent" required><span><strong>개인정보 수집 및 이용에 동의합니다.</strong><br>수집된 개인정보는 이벤트 진행 및 경품 발송을 위해서만 사용되며, 목적 달성 후 즉시 파기됩니다. <br><small>※ 실제 운영 전 기관의 개인정보 처리 기준에 맞게 수집 목적·항목·보유기간·문의처를 확인해 주세요.</small></span></label>
-<div class="privacy">시범용 페이지입니다. 제출 내용은 서버나 스프레드시트로 자동 전송되지 않습니다. 실제 응답 수집을 위해서는 별도의 저장 연동이 필요합니다.</div>
+<div class="privacy">제출한 응답은 설정된 Google 스프레드시트에 저장됩니다. 개인정보는 캠페인 운영 목적에 필요한 범위에서만 수집·관리해 주세요.</div>
 <div class="actions"><button class="primary" type="submit">제출하기 ›</button><button class="secondary" type="button" id="downloadCsv">응답 CSV 내려받기</button></div>
 <div class="message" id="formMessage" role="status"></div></form></section>
 <footer>광명시정신건강복지센터 · 아동·청소년 정신건강 인식개선 캠페인</footer>
@@ -111,7 +111,23 @@ function checkAnswers(reveal=false){
 document.getElementById("checkAnswers").addEventListener("click",()=>checkAnswers(false));
 document.getElementById("clearAnswers").addEventListener("click",()=>{Object.values(inputs).forEach(i=>{i.value="";i.parentElement.classList.remove("correct","wrong")});const m=document.getElementById("quizMessage");m.className="message";m.textContent="";selectedWord="across1";highlightClue();inputs[words.across1.path[0].join(",")].focus()});
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
-document.getElementById("quizForm").addEventListener("submit",e=>{e.preventDefault();lastRecord=collect();const m=document.getElementById("formMessage");m.className="message good";m.style.display="block";m.textContent=`응답 내용을 브라우저에서 정리했어요. 정답 ${lastRecord.score}/${Object.keys(words).length}개. 현재 데이터는 서버나 스프레드시트로 전송되지 않습니다.`});
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrQhjUcAip2bkx8fWPsySr8zS4rDOiI7xU0x9JB5xw7L_LeKAvGkA5g60OfS9WEPZf/exec";
+document.getElementById("quizForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const m=document.getElementById("formMessage");
+ if(!document.querySelector('input[name="privacyConsent"]').checked){m.className="message bad";m.style.display="block";m.textContent="개인정보 수집 및 이용 동의가 필요합니다.";return}
+ if(!GOOGLE_APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/")){m.className="message bad";m.style.display="block";m.textContent="아직 스프레드시트 연결 주소가 설정되지 않았어요. 관리자에게 문의해 주세요.";return}
+ const submitButton=e.submitter; if(submitButton) submitButton.disabled=true;
+ lastRecord=collect();
+ const payload={...lastRecord,answers: lastRecord.answers,score:lastRecord.score,total:Object.keys(words).length};
+ m.className="message";m.style.display="block";m.textContent="응답을 제출하고 있어요…";
+ try{
+   await fetch(GOOGLE_APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+   m.className="message good";m.textContent=`응답 제출 요청을 보냈어요. 정답 ${lastRecord.score}/${Object.keys(words).length}개. 스프레드시트에 기록되었는지 확인해 주세요.`;
+   document.getElementById("quizForm").reset();
+ }catch(err){m.className="message bad";m.textContent="전송 중 오류가 발생했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.";}
+ finally{if(submitButton)submitButton.disabled=false;}
+});
 document.getElementById("downloadCsv").addEventListener("click",()=>{const d=lastRecord||collect();const headers=["제출시각","이름/닉네임","자녀 연령대","연락처","성별","거주지역","개인정보 동의","가로1","가로2","가로3","세로1","세로2","정답 수"];const vals=[d.submittedAt,d.respondent,d.childAge,d.phone,d.gender,d.area,d.privacyConsent==="on"?"동의":"미동의",d.answers["가로 1"],d.answers["가로 2"],d.answers["가로 3"],d.answers["세로 1"],d.answers["세로 2"],d.score];const esc=v=>'"'+String(v??"").replaceAll('"','""')+'"';const blob=new Blob(["\uFEFF"+headers.map(esc).join(",")+"\r\n"+vals.map(esc).join(",")],{type:"text/csv;charset=utf-8;"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="가로세로_낱말퀴즈_응답.csv";a.click();URL.revokeObjectURL(url)});
 highlightClue();
 </script></body></html>
