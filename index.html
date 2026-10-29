@@ -12,7 +12,7 @@ body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;z-
 .page{width:min(900px,100%);margin:auto;padding:18px 14px 34px}.hero{text-align:center;padding:16px 8px 18px}.hero h1{display:inline-block;margin:0;padding:8px 17px;background:var(--yellow);border:3px solid var(--ink);border-radius:22px;box-shadow:3px 4px 0 var(--orange);font-size:clamp(25px,5vw,42px);font-weight:1000;transform:rotate(-2deg)}.mascot svg{display:block;width:100%;height:auto;overflow:visible}.header-art{display:block;width:min(100%,900px);height:auto;margin:0 auto;border:0;border-radius:12px}.hero p{font-weight:700;color:#31582d}
 .panel{background:rgba(255,253,244,.97);border:3px solid var(--ink);border-radius:15px;padding:clamp(12px,3vw,23px);box-shadow:5px 6px 0 #e1c45d;margin-bottom:22px}.section-title{font-size:21px;margin:0 0 12px}.pill{display:inline-block;background:var(--orange);border:2px solid var(--ink);padding:4px 11px;font-weight:900;border-radius:5px}.pill.green{background:var(--green)}.instructions{line-height:1.6;margin:0 0 15px}
 .crossword-wrap{overflow-x:auto;padding:3px}.crossword{display:grid;grid-template-columns:repeat(9,minmax(30px,1fr));width:100%;min-width:310px;border:3px solid var(--ink);background:var(--cream)}.cell{aspect-ratio:1;position:relative;border:1px solid #333329;background:var(--cream);min-width:0}.cell.active{background:#fff}.cell input{width:100%;height:100%;border:0;background:transparent;text-align:center;font-size:clamp(16px,3vw,25px);font-weight:800;color:#243f22;outline:none;padding:0;text-transform:none}.cell input:focus{box-shadow:inset 0 0 0 3px #f8a62e;background:#fff8d9}.cell.correct{background:#dff2c9}.cell.wrong{background:#ffe0dc}.cell.wrong input{color:#b52828}.number{position:absolute;top:1px;left:2px;font-size:10px;line-height:1;font-weight:900;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);z-index:1;background:var(--orange);pointer-events:none}.number.green{background:var(--green)}
-.clues{display:grid;grid-template-columns:1fr;gap:14px}.clue-group{border:2px solid var(--ink);border-radius:11px;overflow:hidden;background:rgba(255,255,255,.97)}.clue-head{font-size:18px;font-weight:900;padding:9px 12px;background:#ffb64b;border-bottom:2px solid var(--ink)}.clue-head.green{background:var(--green)}.clue{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:12px;line-height:1.55;cursor:pointer;border-bottom:1px solid #eee9d8}.clue:last-child{border-bottom:0}.clue:hover,.clue.selected{background:#fff5cf}.clue-num{width:23px;height:23px;border:2px solid var(--ink);border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}.clue-num.green{background:var(--green)}.clue p{margin:0;font-size:14px}.hint{font-size:12px;color:#d77a70;margin-top:4px!important}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}button{border:2px solid var(--ink);border-radius:9px;padding:11px 16px;font:inherit;font-weight:900;cursor:pointer}.primary{background:var(--orange);box-shadow:0 3px 0 #b96c19}.secondary{background:#fff}button:active{transform:translateY(2px);box-shadow:none}.message{display:none;margin-top:14px;padding:12px;border-radius:8px;line-height:1.55;font-weight:700}.message.good{display:block;background:#e9f5d8;border:1px solid #8ca85a}.message.bad{display:block;background:#fff0df;border:1px solid #d9a45d}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:800}.field input,.field select{width:100%;padding:11px;border:2px solid #c9c5b4;border-radius:8px;background:white;font:inherit;font-weight:500}.choice-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;min-height:42px}.choice-row label{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;white-space:nowrap}.choice-row input{width:19px;height:19px;accent-color:#ff9d2e;margin:0}.choice-label{font-size:14px;font-weight:900;margin-bottom:6px}.form-grid .field.full{grid-column:1/-1}.field input:focus,.field select:focus{outline:3px solid var(--yellow)}.full{grid-column:1/-1}.consent{display:flex;gap:9px;align-items:flex-start;line-height:1.5;font-size:13px;margin-top:15px}.privacy{background:#f7f5e9;border-radius:8px;padding:11px;font-size:12px;line-height:1.6;margin-top:12px;color:#57574e}footer{text-align:center;padding:3px 0 12px}footer .center-logo{display:block;width:180px;max-width:45vw;height:auto;margin:0 auto;object-fit:contain}.participant-panel{background:#fffdf4;border-color:#254a2b;box-shadow:3px 4px 0 #9fbe62}.participant-panel .pill.green{background:#ffe47b;border-radius:999px}
+.clues{display:grid;grid-template-columns:1fr;gap:14px}.clue-group{border:2px solid var(--ink);border-radius:11px;overflow:hidden;background:rgba(255,255,255,.97)}.clue-head{font-size:18px;font-weight:900;padding:9px 12px;background:#ffb64b;border-bottom:2px solid var(--ink)}.clue-head.green{background:var(--green)}.clue{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:12px;line-height:1.55;cursor:pointer;border-bottom:1px solid #eee9d8}.clue:last-child{border-bottom:0}.clue:hover,.clue.selected{background:#fff5cf}.clue-num{width:23px;height:23px;border:2px solid var(--ink);border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}.clue-num.green{background:var(--green)}.clue p{margin:0;font-size:14px}.hint{font-size:12px;color:#d77a70;margin-top:4px!important}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}button{appearance:none;-webkit-appearance:none;border:2px solid var(--ink);border-radius:9px;padding:11px 16px;font:inherit;font-weight:900;color:var(--ink)!important;-webkit-text-fill-color:var(--ink);cursor:pointer;background-clip:padding-box}button:visited,button:focus,button:hover{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)}.primary{background:var(--orange);box-shadow:0 3px 0 #b96c19}.secondary{background:#fff}button:active{transform:translateY(2px);box-shadow:none}.message{display:none;margin-top:14px;padding:12px;border-radius:8px;line-height:1.55;font-weight:700}.message.good{display:block;background:#e9f5d8;border:1px solid #8ca85a}.message.bad{display:block;background:#fff0df;border:1px solid #d9a45d}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:800}.field input,.field select{width:100%;padding:11px;border:2px solid #c9c5b4;border-radius:8px;background:white;font:inherit;font-weight:500}.choice-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;min-height:42px}.choice-row label{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;white-space:nowrap}.choice-row input{width:19px;height:19px;accent-color:#ff9d2e;margin:0}.choice-label{font-size:14px;font-weight:900;margin-bottom:6px}.form-grid .field.full{grid-column:1/-1}.field input:focus,.field select:focus{outline:3px solid var(--yellow)}.full{grid-column:1/-1}.consent{display:flex;gap:9px;align-items:flex-start;line-height:1.5;font-size:13px;margin-top:15px}.privacy{background:#f7f5e9;border-radius:8px;padding:11px;font-size:12px;line-height:1.6;margin-top:12px;color:#57574e}footer{text-align:center;padding:3px 0 12px}footer .center-logo{display:block;width:180px;max-width:45vw;height:auto;margin:0 auto;object-fit:contain}.participant-panel{background:#fffdf4;border-color:#254a2b;box-shadow:3px 4px 0 #9fbe62}.participant-panel .pill.green{background:#ffe47b;border-radius:999px}
 @media(max-width:620px){.form-grid{grid-template-columns:1fr}.full,.form-grid .field.full{grid-column:auto}.page{padding:12px 9px 26px}.choice-row{gap:10px 14px}}
 
 /* 곰돌이가 있는 편지봉투 바로 아래에 낱말퀴즈 배치 */
@@ -55,6 +55,22 @@ body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;z-
   .number { width: 11px; height: 11px; font-size: 7px; }
   .cell input { font-size: 12px; }
 }
+/* 모바일 브라우저의 기본 파란색 버튼/입력 글자색 덮어쓰기 */
+button, button:visited, button:active, button:focus,
+.actions button, .actions button:visited, .actions button:active {
+  color: #292920 !important;
+  -webkit-text-fill-color: #292920 !important;
+  text-decoration: none !important;
+}
+.cell input {
+  color: #243f22 !important;
+  -webkit-text-fill-color: #243f22 !important;
+  caret-color: #243f22;
+  font-family: inherit;
+  ime-mode: auto;
+}
+.cell input.correct { color: #243f22 !important; -webkit-text-fill-color: #243f22 !important; }
+.cell.wrong input { color: #b52828 !important; -webkit-text-fill-color: #b52828 !important; }
 
 </style>
 </head>
@@ -111,17 +127,22 @@ for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
   const inp=document.createElement("input");inp.autocomplete="off";inp.setAttribute("aria-label",`행 ${r+1} 열 ${c+1} 글자`);inp.dataset.key=key;
   // 한글 IME는 자음/모음을 조합하는 동안 input 이벤트가 여러 번 발생하므로,
   // 조합이 끝난 뒤에만 글자를 확정하고 다음 칸으로 이동합니다.
-  let composing=false,commitTimer=null;
+  let composing=false,commitTimer=null,lastCommittedValue="";
   function commitCellInput(){
    clearTimeout(commitTimer);
+   // 모바일 한글 키보드는 자음/모음을 조합하는 과정에서 input 이벤트가
+   // 여러 번 발생할 수 있습니다. 조합이 끝나고 완성형 한글이 된 경우에만
+   // 한 칸을 확정하고 다음 칸으로 이동합니다.
    commitTimer=setTimeout(()=>{
     const chars=Array.from(inp.value);
     if(chars.length>1)inp.value=chars[chars.length-1];
+    const value=inp.value;
+    if(!value || /^[\u1100-\u11ff\u3130-\u318f\uA960-\uA97F\uD7B0-\uD7FF]+$/.test(value))return;
     clearMark(inp);
-    if(inp.value)advance(inp.dataset.key,1);
-   },0);
+    if(value!==lastCommittedValue){lastCommittedValue=value;advance(inp.dataset.key,1)}
+   },80);
   }
-  inp.addEventListener("compositionstart",()=>{composing=true});
+  inp.addEventListener("compositionstart",()=>{composing=true;clearTimeout(commitTimer)});
   inp.addEventListener("compositionend",()=>{composing=false;commitCellInput()});
   inp.addEventListener("input",e=>{if(composing||e.isComposing)return;commitCellInput()});
   inp.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!inp.value){e.preventDefault();advance(inp.dataset.key,-1)}else if(e.key==="ArrowRight"){e.preventDefault();advance(inp.dataset.key,1)}else if(e.key==="ArrowLeft"){e.preventDefault();advance(inp.dataset.key,-1)}else if(e.key==="Enter"){e.preventDefault();document.getElementById("checkAnswers").click()}});
