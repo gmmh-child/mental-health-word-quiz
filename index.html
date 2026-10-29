@@ -111,12 +111,12 @@ function checkAnswers(reveal=false){
 document.getElementById("checkAnswers").addEventListener("click",()=>checkAnswers(false));
 document.getElementById("clearAnswers").addEventListener("click",()=>{Object.values(inputs).forEach(i=>{i.value="";i.parentElement.classList.remove("correct","wrong")});const m=document.getElementById("quizMessage");m.className="message";m.textContent="";selectedWord="across1";highlightClue();inputs[words.across1.path[0].join(",")].focus()});
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
-const GOOGLE_APPS_SCRIPT_URL = "https://docs.google.com/spreadsheets/d/1Bn6QhBgKsE9fUag9hgbwFsoISK_wJeLY02Fd512mBUw/edit?gid=0#gid=0";
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyVmKfwNKO4kU5RORZyuWgyGUdDdWdxcw3DocfFmtJIHBL9LXF2iAcuG4Z9KCyzHjm/exec";
 document.getElementById("quizForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const m=document.getElementById("formMessage");
  if(!document.querySelector('input[name="privacyConsent"]').checked){m.className="message bad";m.style.display="block";m.textContent="개인정보 수집 및 이용 동의가 필요합니다.";return}
- if(!GOOGLE_APPS_SCRIPT_URL.startsWith("https://docs.google.com/spreadsheets/d/1Bn6QhBgKsE9fUag9hgbwFsoISK_wJeLY02Fd512mBUw/edit?gid=0#gid=0")){m.className="message bad";m.style.display="block";m.textContent="아직 스프레드시트 연결 주소가 설정되지 않았어요. 관리자에게 문의해 주세요.";return}
+ if(!GOOGLE_APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/")){m.className="message bad";m.style.display="block";m.textContent="아직 스프레드시트 연결 주소가 설정되지 않았어요. 관리자에게 문의해 주세요.";return}
  const submitButton=e.submitter; if(submitButton) submitButton.disabled=true;
  lastRecord=collect();
  const payload={...lastRecord,answers: lastRecord.answers,score:lastRecord.score,total:Object.keys(words).length};
