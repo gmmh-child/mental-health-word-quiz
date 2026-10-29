@@ -111,7 +111,7 @@ function checkAnswers(reveal=false){
 document.getElementById("checkAnswers").addEventListener("click",()=>checkAnswers(false));
 document.getElementById("clearAnswers").addEventListener("click",()=>{Object.values(inputs).forEach(i=>{i.value="";i.parentElement.classList.remove("correct","wrong")});const m=document.getElementById("quizMessage");m.className="message";m.textContent="";selectedWord="across1";highlightClue();inputs[words.across1.path[0].join(",")].focus()});
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU-YHr8jFUaZ68G5jp4FTOPcWKjW2xBhUQqr2esBH9LPfdHL8gDXTKSdP8LNI8pqDH2g/exec";
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqVnxPsFgPhxT_oZyVUgQayEbN85L69N7X1EYuPCS1dO-gq-HAvQv0Rjqb-kEhxyzq9A/exec";
 document.getElementById("quizForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const m=document.getElementById("formMessage");
@@ -123,7 +123,7 @@ document.getElementById("quizForm").addEventListener("submit",async e=>{
  m.className="message";m.style.display="block";m.textContent="응답을 제출하고 있어요…";
  try{
    await fetch(GOOGLE_APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-   m.className="message good";m.textContent=`응답 제출 요청을 보냈어요. 정답 ${lastRecord.score}/${Object.keys(words).length}개. 스프레드시트에 기록되었는지 확인해 주세요.`;
+   m.className="message good";m.textContent="제출되었습니다! 참여해주셔서 감사합니다";
    document.getElementById("quizForm").reset();
  }catch(err){m.className="message bad";m.textContent="전송 중 오류가 발생했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.";}
  finally{if(submitButton)submitButton.disabled=false;}
