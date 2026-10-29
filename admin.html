@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>퀴즈 응답 관리자</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{font-family:Arial,'Malgun Gothic',sans-serif;max-width:900px;margin:30px auto;padding:0 16px;color:#222}input,button{font-size:16px;padding:10px;margin:5px 0;max-width:100%}button{cursor:pointer}section{border:1px solid #ddd;border-radius:12px;padding:18px;margin:16px 0}#status{white-space:pre-wrap;color:#444}.hidden{display:none}</style></head><body>
+<h1>정신건강 가로세로 낱말퀴즈 응답 관리자</h1>
+<p>관리자 계정으로 로그인한 경우에만 응답을 조회하고 CSV로 내려받을 수 있습니다.</p>
+<section id="loginBox"><h2>관리자 로그인</h2><label>관리자 이메일<br><input id="email" type="email" autocomplete="username"></label><br><label>비밀번호<br><input id="password" type="password" autocomplete="current-password"></label><br><button id="login">로그인</button><p id="status"></p></section>
+<section id="dataBox" class="hidden"><h2>응답 내보내기</h2><p id="count">응답을 불러오는 중입니다.</p><button id="refresh">응답 새로고침</button> <button id="download">CSV 내려받기</button> <button id="logout">로그아웃</button><p id="dataStatus"></p></section>
+<script>
+// index.html과 동일한 Supabase URL 및 publishable/anon key를 입력하세요. service_role 키 사용 금지.
+const SUPABASE_URL = "https://soltpxwqopykxcqkhdex.supabase.co";
+const SUPABASE_ANON_KEY = "https://soltpxwqopykxcqkhdex.supabase.co";
+const client = (window.supabase && SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_")) ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+let records=[];
+const $=id=>document.getElementById(id);
+function status(t){$('status').textContent=t}
+function flatten(obj,prefix='',out={}){for(const [k,v] of Object.entries(obj||{})){const key=prefix?prefix+'_'+k:k;if(v&&typeof v==='object'&&!Array.isArray(v))flatten(v,key,out);else out[key]=Array.isArray(v)?JSON.stringify(v):v}return out}
+function csvCell(v){let s=String(v??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
+function downloadCSV(){if(!records.length){$('dataStatus').textContent='내려받을 응답이 없습니다.';return}const rows=records.map(r=>({record_id:r.id,stored_at:r.created_at,...flatten(r.payload)}));const keys=[...new Set(rows.flatMap(r=>Object.keys(r)))];const csv='\uFEFF'+[keys.map(csvCell).join(','),...rows.map(r=>keys.map(k=>csvCell(r[k])).join(','))].join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='quiz_responses_'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);$('dataStatus').textContent='CSV 파일 다운로드를 시작했습니다.'}
+async function loadRecords(){ $('dataStatus').textContent='응답을 불러오는 중입니다.';const {data,error}=await client.from('quiz_responses').select('id,created_at,payload').order('created_at',{ascending:false});if(error){$('dataStatus').textContent='조회 실패: '+error.message;return}records=data||[];$('count').textContent='저장된 응답: '+records.length+'건';$('dataStatus').textContent='응답을 불러왔습니다.'}
+$('login').onclick=async()=>{if(!client){status('Supabase URL과 publishable/anon key 설정을 먼저 완료하세요.');return}const {error}=await client.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error){status('로그인 실패: '+error.message);return}status('로그인되었습니다.');$('loginBox').classList.add('hidden');$('dataBox').classList.remove('hidden');await loadRecords()};
+$('refresh').onclick=loadRecords;$('download').onclick=downloadCSV;$('logout').onclick=async()=>{await client.auth.signOut();records=[];$('dataBox').classList.add('hidden');$('loginBox').classList.remove('hidden');status('로그아웃되었습니다.')};
+</script></body></html>
