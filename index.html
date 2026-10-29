@@ -97,7 +97,7 @@ button, button:visited, button:active, button:focus,
 <section class="panel participant-panel"><h2 class="section-title"><span class="pill green">참여자 정보</span></h2>
 <form id="quizForm"><div class="form-grid">
 <label class="field">이름<input name="respondent" required maxlength="40" placeholder="이름을 입력해 주세요." autocomplete="name"></label>
-<label class="field">연락처<input name="phone" type="tel" required maxlength="20" placeholder="연락처를 입력해 주세요. (예: 010-1234-5678)" autocomplete="tel"></label>
+<label class="field">연락처<input name="phone" id="phoneInput" type="tel" inputmode="numeric" pattern="[0-9]{9,11}" required maxlength="11" placeholder="숫자만 입력해 주세요. (예: 01012345678)" autocomplete="tel"></label>
 <label class="field">거주 동<select name="area"><option value="">선택해 주세요.</option><option>광명동</option><option>철산동</option><option>하안동</option><option>소하동</option><option>일직동</option><option>학온동</option><option>광명시 외</option></select></label>
 <label class="field">자녀 연령대<select name="childAge" required><option value="">선택해 주세요.</option><option>미취학</option><option>초등학생</option><option>중학생</option><option>고등학생</option></select></label>
 <label class="field">성별<select name="gender" required><option value="">선택해 주세요.</option><option>남성</option><option>여성</option></select></label>
@@ -178,6 +178,13 @@ function checkAnswers(reveal=false){
 }
 document.getElementById("checkAnswers").addEventListener("click",()=>checkAnswers(false));
 document.getElementById("clearAnswers").addEventListener("click",()=>{Object.values(inputs).forEach(i=>{i.value="";i.parentElement.classList.remove("correct","wrong")});const m=document.getElementById("quizMessage");m.className="message";m.textContent="";selectedWord="across1";highlightClue();inputs[words.across1.path[0].join(",")].focus()});
+const phoneInput=document.getElementById("phoneInput");
+if(phoneInput){
+  phoneInput.addEventListener("input",()=>{
+    const digits=phoneInput.value.replace(/\D/g,"").slice(0,11);
+    if(phoneInput.value!==digits) phoneInput.value=digits;
+  });
+}
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
 // Supabase 프로젝트 생성 후 아래 두 값을 입력하세요. service_role 키는 절대 넣지 마세요.
 const SUPABASE_URL = "https://soltpxwqopykxcqkhdex.supabase.co";
