@@ -114,7 +114,7 @@ document.getElementById("clearAnswers").addEventListener("click",()=>{Object.val
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
 // Supabase 프로젝트 생성 후 아래 두 값을 입력하세요. service_role 키는 절대 넣지 마세요.
 const SUPABASE_URL = "https://soltpxwqopykxcqkhdex.supabase.co";
-const SUPABASE_ANON_KEY = "https://soltpxwqopykxcqkhdex.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_sJPos6PK7UuKX6q5pt_OYw_lY7lW_IO";
 const supabaseClient = (window.supabase && SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_"))
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
