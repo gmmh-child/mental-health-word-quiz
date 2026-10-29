@@ -111,7 +111,7 @@ function checkAnswers(reveal=false){
 document.getElementById("checkAnswers").addEventListener("click",()=>checkAnswers(false));
 document.getElementById("clearAnswers").addEventListener("click",()=>{Object.values(inputs).forEach(i=>{i.value="";i.parentElement.classList.remove("correct","wrong")});const m=document.getElementById("quizMessage");m.className="message";m.textContent="";selectedWord="across1";highlightClue();inputs[words.across1.path[0].join(",")].focus()});
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxrQhjUcAip2bkx8fWPsySr8zS4rDOiI7xU0x9JB5xw7L_LeKAvGkA5g60OfS9WEPZf/exec";
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBwaVthqibO2Ojvfm3VpeKZTkvGL3Kli7dPTyxPL_O4C-QIMm1G1aSOd6EkEpz2eWM5w/exec";
 document.getElementById("quizForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const m=document.getElementById("formMessage");
