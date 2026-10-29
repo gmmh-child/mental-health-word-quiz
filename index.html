@@ -18,6 +18,44 @@ body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;z-
 /* 곰돌이가 있는 편지봉투 바로 아래에 낱말퀴즈 배치 */
 .page>section.panel:first-of-type{margin-top:24vw}
 .page>section.panel:first-of-type>.section-title{display:none}
+
+/* 모바일 최적화: 퀴즈판과 입력창이 화면 밖으로 밀리지 않도록 조정 */
+@media (max-width: 620px) {
+  html, body { width: 100%; overflow-x: hidden; }
+  .page { width: 100%; max-width: 100%; padding: 10px 8px 24px; }
+  .hero { padding: 8px 2px 12px; }
+  .header-art { width: 100%; max-width: 100%; height: auto; }
+  .page > section.panel:first-of-type { margin-top: 16vw; }
+  .panel { padding: 11px 9px; border-width: 2px; border-radius: 12px; margin-bottom: 16px; box-shadow: 3px 4px 0 #e1c45d; }
+  .section-title { font-size: 18px; line-height: 1.35; }
+  .crossword-wrap { width: 100%; max-width: 100%; overflow: visible; padding: 1px; }
+  .crossword { width: 100%; min-width: 0; grid-template-columns: repeat(9, minmax(0, 1fr)); border-width: 2px; }
+  .cell { min-width: 0; }
+  .cell input { font-size: clamp(12px, 4.2vw, 19px); line-height: 1; }
+  .number { width: 13px; height: 13px; top: 0; left: 0; font-size: 8px; line-height: 1; border-width: 1px; }
+  .clue-head { font-size: 16px; padding: 8px 10px; }
+  .clue { grid-template-columns: 24px minmax(0, 1fr); gap: 6px; padding: 10px 8px; }
+  .clue-num { width: 21px; height: 21px; font-size: 12px; }
+  .clue p { font-size: 13px; overflow-wrap: anywhere; }
+  .hint { font-size: 11px; line-height: 1.45; }
+  .actions { display: grid; grid-template-columns: 1fr; gap: 9px; }
+  .actions button, button { min-height: 44px; }
+  .actions button { width: 100%; padding: 10px 12px; }
+  .form-grid { grid-template-columns: minmax(0, 1fr); gap: 11px; }
+  .form-grid .field.full, .full { grid-column: auto; }
+  .field input, .field select { min-height: 44px; font-size: 16px; }
+  .choice-row { align-items: flex-start; gap: 10px 12px; }
+  .choice-row label { white-space: normal; font-size: 13px; }
+  .consent { font-size: 12px; }
+  footer .center-logo { width: 150px; max-width: 60vw; }
+}
+@media (max-width: 360px) {
+  .page { padding-left: 6px; padding-right: 6px; }
+  .panel { padding-left: 7px; padding-right: 7px; }
+  .number { width: 11px; height: 11px; font-size: 7px; }
+  .cell input { font-size: 12px; }
+}
+
 </style>
 </head>
 <body><main class="page">
