@@ -140,7 +140,14 @@ for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     const value=inp.value;
     if(!value || /^[\u1100-\u11ff\u3130-\u318f\uA960-\uA97F\uD7B0-\uD7FF]+$/.test(value))return;
     clearMark(inp);
-    if(value!==lastCommittedValue){lastCommittedValue=value;advance(inp.dataset.key,1)}
+    if(value!==lastCommittedValue){
+     lastCommittedValue=value;
+     // 모바일 키보드는 받침 입력 전에도 조합이 끝난 것으로 이벤트를 보낼 수 있어
+     // 모바일에서는 자동으로 다음 칸으로 이동하지 않습니다. 사용자가 완성한 뒤
+     // 원하는 다음 칸을 직접 누를 수 있도록 하며, PC에서는 기존 자동 이동을 유지합니다.
+     const mobileInput=window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+     if(!mobileInput)advance(inp.dataset.key,1);
+    }
    },80);
   }
   inp.addEventListener("compositionstart",()=>{composing=true;clearTimeout(commitTimer)});
