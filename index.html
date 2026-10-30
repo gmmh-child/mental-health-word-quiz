@@ -126,23 +126,25 @@ for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
  if(active.has(key)){
   const badge=numberAt[key];if(badge){const b=document.createElement("span");b.className="number"+(badge.green?" green":"");b.textContent=badge.n;cell.appendChild(b)}
   const inp=document.createElement("input");inp.autocomplete="off";inp.setAttribute("aria-label",`행 ${r+1} 열 ${c+1} 글자`);inp.dataset.key=key;
-  // PC와 iPhone/iPad의 한글 IME 입력을 모두 고려합니다.
-  // 자음·모음 조합 중에는 이동하지 않고, 완성형 한글 음절이 확정된 뒤 다음 칸으로 이동합니다.
+  // PC와 iPhone/iPad의 한글 IME 입력을 고려합니다.
+  // 모바일 키보드는 음절 조합 중간에 compositionend가 발생할 수 있어,
+  // 조합 종료 직후 이동하지 않고 입력이 잠시 안정된 뒤 다음 칸으로 이동합니다.
+  // 사용자가 받침을 이어 입력하면 compositionstart/input이 타이머를 취소하거나 다시 시작합니다.
   let composing=false,commitTimer=null,lastCommittedValue="";
   function commitCellInput(){
    clearTimeout(commitTimer);
    commitTimer=setTimeout(()=>{
+    if(composing)return;
     const chars=Array.from(inp.value);
     if(chars.length>1){inp.value=chars[chars.length-1]}
     const value=inp.value;
-    // 초성/중성/종성 조합 중인 자모는 완성된 글자로 보지 않습니다.
+    // 초성/중성/종성 조합 중인 자모는 완성형 한글 음절로 인정하지 않습니다.
     if(!value || !/[\uAC00-\uD7A3]/.test(value))return;
     if(value===lastCommittedValue)return;
     lastCommittedValue=value;
     clearMark(inp);
-    // 입력이 확정된 경우에만 현재 선택된 가로/세로 단어의 다음 칸으로 이동합니다.
     advance(inp.dataset.key,1);
-   },60);
+   },500);
   }
   inp.addEventListener("compositionstart",()=>{composing=true;clearTimeout(commitTimer)});
   inp.addEventListener("compositionend",()=>{composing=false;commitCellInput()});
@@ -184,7 +186,7 @@ if(phoneInput){
 }
 function collect(){const d=Object.fromEntries(new FormData(document.getElementById("quizForm")).entries());d.answers={};Object.entries(words).forEach(([k,w])=>d.answers[w.label]=w.path.map(p=>inputs[p.join(",")].value).join(""));d.score=Object.entries(words).filter(([k,w])=>w.path.map(p=>inputs[p.join(",")].value).join("")===w.answer).length;d.submittedAt=new Date().toISOString();return d}
 // Supabase 프로젝트 생성 후 아래 두 값을 입력하세요. service_role 키는 절대 넣지 마세요.
-const SUPABASE_URL = "https://soltpxwqopykxcqkhdex.supabase.co";
+const SUPABASE_URL = https://soltpxwqopykxcqkhdex.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_sJPos6PK7UuKX6q5pt_OYw_lY7lW_IO";
 const supabaseClient = (window.supabase && SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_"))
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
